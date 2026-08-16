@@ -1,0 +1,119 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<h1>All Courses</h1>
+
+<div class="search-box">
+
+    <form method="get">
+
+        <label>Search by title</label>
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Enter course name..."
+            value="{{ search }}"
+        >
+
+        <label>Instructor</label>
+
+        <select name="instructor">
+
+            <option value="">
+                All Instructors
+            </option>
+
+            {% for instructor in instructors %}
+
+                <option
+                    value="{{ instructor.id }}"
+                    {% if selected_instructor == instructor.id|stringformat:"s" %}selected{% endif %}
+                >
+                    {{ instructor.name }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <label>Category</label>
+
+        <select name="category">
+
+            <option value="">
+                All Categories
+            </option>
+
+            {% for category in categories %}
+
+                <option
+                    value="{{ category.id }}"
+                    {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}
+                >
+                    {{ category.name }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit" class="btn">
+            Search / Filter
+        </button>
+
+    </form>
+
+</div>
+
+
+{% for course in courses %}
+
+    <div class="card">
+
+        <div class="course-title">
+            {{ course.title }}
+        </div>
+
+        <p>
+            <strong>Instructor:</strong>
+            <a href="{% url 'instructor_courses' course.instructor.id %}">
+                {{ course.instructor.name }}
+            </a>
+        </p>
+
+        <p>
+            <strong>Category:</strong>
+            {{ course.category }}
+        </p>
+
+        <p class="muted">
+            Enrolled Students:
+            {{ course.enrollments.count }}
+        </p>
+
+        <a
+            href="{% url 'course_detail' course.id %}"
+            class="btn"
+        >
+            View Details
+        </a>
+
+    </div>
+
+{% empty %}
+
+    <div class="card">
+
+        <h2>No Courses Available</h2>
+
+        <p class="muted">
+            There are no courses to display.
+        </p>
+
+    </div>
+
+{% endfor %}
+
+{% endblock %}

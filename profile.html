@@ -1,0 +1,84 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<h1>My Profile</h1>
+
+<div class="card">
+
+    <h2>{{ user.username }}</h2>
+
+    <p>
+        <strong>Email:</strong>
+        {{ user.email }}
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <h2>My Enrollments</h2>
+
+    {% for enrollment in enrollments %}
+
+        <div class="card">
+
+            <div class="course-title">
+                {{ enrollment.course.title }}
+            </div>
+
+            <p>
+                <strong>Instructor:</strong>
+                {{ enrollment.course.instructor.name }}
+            </p>
+
+            <p class="muted">
+                Enrolled on:
+                {{ enrollment.enrolled_at|date:"d M Y" }}
+            </p>
+
+            <a
+                href="{% url 'edit_enrollment' enrollment.id %}"
+                class="btn"
+            >
+                Edit
+            </a>
+
+            <form
+                method="post"
+                action="{% url 'cancel_enrollment' enrollment.id %}"
+                style="display: inline;"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                >
+                    Cancel
+                </button>
+
+            </form>
+
+        </div>
+
+    {% empty %}
+
+        <p class="muted">
+            You are not enrolled in any courses yet.
+        </p>
+
+        <a
+            href="{% url 'course_list' %}"
+            class="btn"
+        >
+            Browse Courses
+        </a>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

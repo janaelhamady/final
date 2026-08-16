@@ -1,0 +1,48 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<h1>Instructor Dashboard</h1>
+
+<h2>Welcome, {{ instructor.name }}</h2>
+
+<p>Your Courses:</p>
+
+{% for course in courses %}
+
+    <div class="card">
+
+        <h3>{{ course.title }}</h3>
+
+        <p>
+            {{ course.description }}
+        </p>
+
+        <p>
+            Category: {{ course.category }}
+        </p>
+
+        <p>
+            Enrolled Students:
+            {{ course.enrollments.count }}
+        </p>
+
+        <a
+            href="{% url 'course_detail' course.id %}"
+            class="btn"
+        >
+            View Details
+        </a>
+
+    </div>
+
+{% empty %}
+
+    <div class="card">
+        <h3>No courses yet.</h3>
+        <p>You don't have any courses assigned to you.</p>
+    </div>
+
+{% endfor %}
+
+{% endblock %}

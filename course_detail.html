@@ -1,0 +1,67 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<h1>Course Details</h1>
+
+<div class="card">
+
+    <div class="course-title">
+        {{ course.title }}
+    </div>
+
+    <p>
+        <strong>Instructor:</strong>
+        {{ course.instructor.name }}
+    </p>
+
+    <p>
+        <strong>Category:</strong>
+        {{ course.category }}
+    </p>
+
+    <hr>
+
+    <h3>Description</h3>
+
+    <p>
+        {{ course.description }}
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <h2>Enrolled Students</h2>
+
+    {% for enrollment in enrollments %}
+
+        <p>
+            {{ enrollment.student.user.username }}
+        </p>
+
+    {% empty %}
+
+        <p class="muted">
+            No students enrolled yet.
+        </p>
+
+    {% endfor %}
+
+</div>
+
+
+{% if user.is_authenticated %}
+
+    <a
+        href="{% url 'enroll' %}"
+        class="btn"
+    >
+        Enroll in a Course
+    </a>
+
+{% endif %}
+
+
+{% endblock %}

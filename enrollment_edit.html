@@ -1,0 +1,30 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>Edit Enrollment</h1>
+
+    <p class="muted">
+        Change the course you are enrolled in.
+    </p>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button
+            type="submit"
+            class="btn"
+        >
+            Save Changes
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

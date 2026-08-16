@@ -1,0 +1,30 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>Enroll in a Course</h1>
+
+    <p class="muted">
+        Choose a course to enroll in.
+    </p>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button
+            type="submit"
+            class="btn"
+        >
+            Enroll
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
